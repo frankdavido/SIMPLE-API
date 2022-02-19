@@ -36,7 +36,6 @@ if (!is_array($data) || count($data) < 1) {
  * Ensure the request must have a userid
  */
 $userid = $data['userid'];
-die(json_encode($userid));
 if (!isset($userid) || empty($userid) || !is_numeric((int) $userid)) {
     /*
      * tell the user Request method is wrong
@@ -46,7 +45,6 @@ if (!isset($userid) || empty($userid) || !is_numeric((int) $userid)) {
     echo json_encode(array('message'=>'Userid is required', 'status'=>false));
     exit;
 }
-die(json_encode("here"));
 
 try {
     /*
