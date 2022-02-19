@@ -12,6 +12,16 @@ if (!defined('HOSTNAME')) {
     define('HTTP_HOST', $_SERVER['HTTP_HOST']);
     define('HOSTNAME', explode('.', SERVER_NAME, 2)[0]);
 }
+/**
+ * Get URI elements.
+ * @return array
+ */
+function getUriSegments():array
+{
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $uri = explode('/', $uri);
+    return $uri;
+}
 #endregion
 
 #region
@@ -51,3 +61,4 @@ class CONSTANTS
 
 
 date_default_timezone_set(constants::TIMEZONENAME);
+require_once DOCUMENT_ROOT . '/db/dbconn.php';
