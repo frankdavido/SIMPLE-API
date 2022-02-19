@@ -1,5 +1,4 @@
 <?php
-
 if (!defined("DOCUMENT_ROOT")) {
     define("DOCUMENT_ROOT", $_SERVER['DOCUMENT_ROOT']);
 }
@@ -26,15 +25,19 @@ if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'PUT') {
     exit;
 }
 // get data
-$data = (array) json_decode(file_get_contents("php://input"));
+$data = (array) json_decode(file_get_contents("php://input"));  // accept JSON
 if (!is_array($data) || count($data) < 1) {
-    $data = $_PUT;
+    $data = $_PUT;                                              // accept URLencoded form data
+}
+if (!is_array($data) || count($data) < 1) {
+    $data = $_GET;                                              // accept Multipart form data
 }
 /*
-    Ensure the request must have a userid
+ * Ensure the request must have a userid
  */
 $userid = $data['userid'];
-if (!isset($userid) || empty($userid) || !is_numeric($userid)) {
+die(json_encode($userid));
+if (!isset($userid) || empty($userid) || !is_numeric((int) $userid)) {
     /*
      * tell the user Request method is wrong
      * i. set response code - 400 bad request
@@ -43,6 +46,7 @@ if (!isset($userid) || empty($userid) || !is_numeric($userid)) {
     echo json_encode(array('message'=>'Userid is required', 'status'=>false));
     exit;
 }
+die(json_encode("here"));
 
 try {
     /*

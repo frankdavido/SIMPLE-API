@@ -1,5 +1,4 @@
 <?php
-
 if (!defined("DOCUMENT_ROOT")) {
     define("DOCUMENT_ROOT", $_SERVER['DOCUMENT_ROOT']);
 }
@@ -26,9 +25,12 @@ if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
     exit;
 }
 // get data
-$data = (array) json_decode(file_get_contents("php://input"));
+$data = (array) json_decode(file_get_contents("php://input"));  // accept JSON
 if (!is_array($data) || count($data) < 1) {
-    $data = $_POST;
+    $data = $_POST;                                             // accept URLencoded form data
+}
+if (!is_array($data) || count($data) < 1) {
+    $data = $_GET;                                              // accept Multipart form data
 }
 
 /*
