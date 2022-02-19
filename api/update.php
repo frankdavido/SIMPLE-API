@@ -10,25 +10,38 @@ require_once DOCUMENT_ROOT . '/api/settings.php';
  */
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Methods: PUT");
 header("Access-Control-Max-Age: 30");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 
 // Determine the request method. Must be GET
-if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'GET') {
+if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'PUT') {
     /*
      * tell the user Request method is wrong
      * i. set response code - 400 bad request
      */
     http_response_code(400);
-    echo json_encode(array('message'=>'Use GET REQUEST_METHOD', 'status'=>false));
+    echo json_encode(array('message'=>'Use PUT REQUEST_METHOD', 'status'=>false));
     exit;
 }
 // get data
 $data = (array) json_decode(file_get_contents("php://input"));
 if (!is_array($data) || count($data) < 1) {
-    $data = $_GET;
+    $data = $_PUT;
+}
+/*
+    Ensure the request must have a userid
+ */
+$userid = $data['userid'];
+if (!isset($userid) || empty($userid) || !is_numeric($userid)) {
+    /*
+     * tell the user Request method is wrong
+     * i. set response code - 400 bad request
+     */
+    http_response_code(400);
+    echo json_encode(array('message'=>'Userid is required', 'status'=>false));
+    exit;
 }
 
 try {
@@ -38,56 +51,55 @@ try {
      * 2. Limit clause (optional)
      * 4. Order by (optional). Default [userid]
      */
-    $query = "SELECT * from `employees`";
-    $whereClause = " where ";
-    if (isset($data['userid'])) {
-        $query .= $whereClause . "`userid` = :userid";
-        $userid = $data['userid'];
-        $whereClause = " and ";
-    }
+    $query = "UPDATE `employees` SET ";
+    $comma = "";
     if (isset($data['username'])) {
-        $query .= $whereClause . "`username` = :username";
+        $query .= $comma . "`username` = :username";
         $username = $data['username'];
-        $whereClause = " and ";
+        $comma = ", ";
     }
     if (isset($data['first_name'])) {
-        $query .= $whereClause . "`first_name` = :first_name";
+        $query .= $comma . "`first_name` = :first_name";
         $first_name = $data['first_name'];
-        $whereClause = " and ";
+        $comma = ", ";
     }
     if (isset($data['last_name'])) {
-        $query .= $whereClause . "`last_name` = :last_name";
+        $query .= $comma . "`last_name` = :last_name";
         $last_name = $data['last_name'];
-        $whereClause = " and ";
+        $comma = ", ";
     }
     if (isset($data['email'])) {
-        $query .= $whereClause . "`email` = :email";
+        $query .= $comma . "`email` = :email";
         $email = $data['email'];
-        $whereClause = " and ";
+        $comma = ", ";
     }
     if (isset($data['country'])) {
-        $query .= $whereClause . "`country` = :country";
+        $query .= $comma . "`country` = :country";
         $country = $data['country'];
-        $whereClause = " and ";
+        $comma = ", ";
     }
     if (isset($data['age'])) {
-        $query .= $whereClause . "`age` = :age";
+        $query .= $comma . "`age` = :age";
         $age = $data['age'];
-        $whereClause = " and ";
+        $comma = ", ";
     }
     if (isset($data['role'])) {
-        $query .= $whereClause . "`role` like :role";
-        $role = "%" . $data['role'] . "%";
-        $whereClause = " and ";
+        $query .= $comma . "`role` = :role";
+        $role = $data['role'];
+        $comma = ", ";
     }
-    if (isset($data['limit'])) {
-        $query .= " LIMIT :limit";
-        $limit = (int) $data['limit'];
+    $query .= " where `userid` = :userid";
+
+    if ($comma === '') {
+        /*
+         * tell the user Request incomplete data
+         * i. set response code - 400 bad request
+         */
+        http_response_code(400);
+        echo json_encode(array('message'=>'Incomplete data. Provide a parameter to update', 'status'=>false));
+        exit;
     }
-    if (isset($data['sort'])) {
-        $query .= " ORDER BY :orderby";
-        $orderby = $data['sort'];
-    }
+
     // Prepare the statment
     $stmt = $dbconn->prepare($query);
     // Bind Parameters by reference
@@ -115,25 +127,17 @@ try {
     if (isset($role)) {
         $stmt->bindParam(':role', $role, PDO::PARAM_STR);
     }
-    if (isset($limit)) {
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-    }
-    if (isset($orderby)) {
-        $stmt->bindParam(':orderby', $orderby, PDO::PARAM_STR);
-    }
-    //Execute statment
-    $stmt->execute();
-    //FetchALl results
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //Response
     /*
+     * Execute statment
      * Tell the user the responses
      * i. set response code - 200 OK
      */
     http_response_code(200);
-    echo json_encode($result);
-    $stmt = null;
-    $dbconn = null;
+    if ($stmt->execute()) {
+        echo json_encode(array('message'=>'Employee updated successfully', 'status'=>true));
+    } else {
+        echo json_encode(array('message'=>'No row was updated', 'status'=>false));
+    }
 } catch (PDOException $e) {
     /*
      * Tell the user the responses
@@ -144,3 +148,5 @@ try {
     // TODO: Write logic to send mail to admin
     error_log($e->getMessage());
 }
+$stmt = null;
+$dbconn = null;

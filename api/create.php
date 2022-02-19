@@ -5,7 +5,7 @@ if (!defined("DOCUMENT_ROOT")) {
 }
 require_once DOCUMENT_ROOT . '/api/settings.php';
 
-/**
+/*
  * Set required REST api headers
  */
 header("Access-Control-Allow-Origin: *");
@@ -17,7 +17,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // Determine the request method. Must be POST
 if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
-    /**
+    /*
      * tell the user Request method is wrong
      * i. set response code - 400 bad request
      */
@@ -31,7 +31,7 @@ if (!is_array($data) || count($data) < 1) {
     $data = $_POST;
 }
 
-/**
+/*
  * Verify $data
  * username, first_name, last_name, email, age, role are compulsory field
  */
@@ -57,7 +57,7 @@ if (!isset($data['username']) || strlen(trim($data['username'])) < 1) {
 }
 
 if (isset($errorMessage)) {
-    /**
+    /*
      * tell the user about the error
      * i. set response code - 400 bad request
      */
@@ -67,7 +67,7 @@ if (isset($errorMessage)) {
 }
 
 try {
-    /**
+    /*
      * Form an SQL query with:
      * 1. Ignoring already existing username,email - UNIQUE KEYS
      */
@@ -84,7 +84,7 @@ try {
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt->bindParam(':age', $age, PDO::PARAM_INT);
     $stmt->bindParam(':role', $role, PDO::PARAM_STR);
-    /**
+    /*
      * Execute statment
      * Tell the user the responses
      * i. set response code - 200 OK
@@ -96,7 +96,7 @@ try {
         echo json_encode(array('message'=>'No row was inserted', 'status'=>false));
     }
 } catch (PDOException $e) {
-    /**
+    /*
      * Tell the user the responses
      * i. set response code - 500 Internal Server error
      */

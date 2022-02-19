@@ -13,7 +13,7 @@ try {
     $dbconn = new PDO('mysql:host=' . constants::DATABASE_HOST . ';charset=utf8mb4', constants::DATABASE_USER, constants::DATABASE_PASSWORD, $dboptions);
 } catch (PDOException $e) {
     $erroMessage = "Failed to connect to MySQL: " . $e->getMessage();
-    /**
+    /*
      * Inform site admin that an error occurred.
      * At thesame time, this ensures a normal site user or Api user won't see this echo. For security reason
      * To prevent leaking your password. Just log the error or send mail to admin
@@ -29,15 +29,14 @@ try {
 
 
 if ($isInitCommand && null !== TOPMOST_FILE && TOPMOST_FILE === 'init.php') {
-
-    /**
+    /*
      * Create database if not exist
      */
     $create__db = "CREATE DATABASE IF NOT EXISTS `" . constants::DATABASE_NAME . "` CHARACTER SET utf8 COLLATE utf8_unicode_ci";
     try {
         $r = $dbconn->exec($create__db);
 
-        /**
+        /*
          * Use the database
          */
         try {
@@ -46,14 +45,14 @@ if ($isInitCommand && null !== TOPMOST_FILE && TOPMOST_FILE === 'init.php') {
             echo "Error using Database - (" . constants::DATABASE_NAME . ") " . $e->getMessage();
             exit;
         }
-        /**
+        /*
          * Check if database existed already
          * That is if it had been initialized before or not
          */
         if (1 === (int) $r) {
             // NO! database did not exist already
             echo "Created database: `" . constants::DATABASE_NAME . "` successfully<br>";
-            /**
+            /*
              * Structure of the employees Table
              */
             $create_users_table = "CREATE TABLE IF NOT EXISTS `employees` (
@@ -71,7 +70,7 @@ if ($isInitCommand && null !== TOPMOST_FILE && TOPMOST_FILE === 'init.php') {
                 KEY `country` (`country`)
             ) CHARACTER SET utf8 ENGINE=InnoDB";
 
-            /**
+            /*
              * Now Create the Table
              */
             try {
@@ -82,7 +81,7 @@ if ($isInitCommand && null !== TOPMOST_FILE && TOPMOST_FILE === 'init.php') {
                 exit;
             }
 
-            /**
+            /*
              * Insert Test Datas into database
              */
             if (true === constants::CREATE_TEST_DATA) {
@@ -112,7 +111,7 @@ if ($isInitCommand && null !== TOPMOST_FILE && TOPMOST_FILE === 'init.php') {
         exit;
     }
 } else {
-    /**
+    /*
      * Use already created database
      */
     try {
