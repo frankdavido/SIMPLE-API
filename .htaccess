@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# HTTP to HTTPS
+RewriteCond %{HTTP} on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+# Rewrite all request to files in api folder to work without .php extension
+RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+RewriteRule ^(api/.*?)/?$ $1.php [L,NC]
+
+
+# Redirect all not-existing directories and non-existing files to root invalid.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ api/invalid.php [L,QSA]
+
+
+# Blacklist Offending DDOSsing and BRUTEFORCING IPS
+Order Allow,Deny
+Deny from 119.185.25.219
+Allow from all
