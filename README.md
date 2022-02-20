@@ -24,8 +24,8 @@ You must use allow our script to automagically create required database and Tabl
 
 ## CRUD OPERATIONS: 	How To Use
 
-1. Read/Get Single/Multiple Record
-----------------------------------
+```
+### 1. Read/Get Single/Multiple Record
 Request Method: GET
 Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Optional parameters :- userid, username, email, first_name, last_name, role, country, age.
@@ -37,8 +37,7 @@ Examples:
 	https://youSiteAddress.com/api/search/?userid=1
 
 
-2. Create/Add/Insert Single Record
-----------------------------------
+### 2. Create/Add/Insert Single Record
 Request Method :- POST
 Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Compulsory parameters :- username, email, first_name, last_name, role, age
@@ -47,8 +46,7 @@ Examples:
 	https://youSiteAddress.com/api/create/
 
 
-3. Update a Single Record
--------------------------
+### 3. Update a Single Record
 Request Method :- PUT
 Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Compulsory parameters :- userid
@@ -57,13 +55,15 @@ Examples:
 	https://youSiteAddress.com/api/create/
 
 
-4. Remove/Delete a Single Record using DELETE request form-data or JSON
+### 4. Remove/Delete a Single Record using DELETE request form-data or JSON
 
 
-## HOW TO KNOW ERROR
+```
+
+## HOW TO KNOW ERROR OCCURRED
 Api returned for errors usually have a response status=error
 Eg
-{
+```{
   "message": "No employee record found with given parameter",
   "status": "error"
-}
+}```
