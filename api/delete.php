@@ -26,7 +26,7 @@ if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'DELETE') {
 // get data
 $data = (array) json_decode(file_get_contents("php://input"));  // accept JSON
 if (!is_array($data) || count($data) < 1) {
-    $data = $_PUT;                                              // accept URLencoded form data
+    $data = $_DELETE;                                              // accept URLencoded form data
 }
 if (!is_array($data) || count($data) < 1) {
     $data = $_GET;                                              // accept Multipart form data
