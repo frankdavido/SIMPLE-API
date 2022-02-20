@@ -19,11 +19,11 @@ Note: I can make PHP to automatically update this htaccess' line number 16 to au
 
 ## Initialization
 
-	Before using the api, you must manually create all the required database and tables by any other means - CLI, Bash, PhpMyadmin, etc.
+Before using the api, you must manually create all the required database and tables by any other means - CLI, Bash, PhpMyadmin, etc.
 
 OR
 
-	You must use allow our script to automagically create required database and Table for you by visiting  http://youSiteAddress.com/api/init  from your browser.
+You must use allow our script to automagically create required database and Table for you by visiting  http://youSiteAddress.com/api/init  from your browser.
 
 
 ## CRUD OPERATIONS: How To Use
