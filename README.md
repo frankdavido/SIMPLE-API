@@ -2,7 +2,7 @@
 A simple API with Core PHP to perform CRUD operations
 
 
-# SOME SECURITIES PUT IN PLACE
+## Some Securities Put In Place
 HTACCESS file
 The /.htaccess file has securities in place to
 * Enforce HTTPS on all request (re writing all http to https)
@@ -10,23 +10,19 @@ The /.htaccess file has securities in place to
 * Black list offending IPs. 
 Note: I can make PHP to automatically update this htaccess' line number 16 to automatically blacklist any offeding User's IP if he fails certain criteria.
 
-# DATABASE PERFORMANCE
-For more performance use persistence connection to database (which reduces the connection overhead)
-* Open the /api/settings.php file and change the 
+## ⭐ Installation
+- Move all the files except the License and Readme files into your website document root directory
+- Open /api/settings.php file and change the credentials and settings accordingly. Found in /api/settings.php
+- If you wish to improve performance of database: Open the /api/settings.php file and change the PERSISTENT_DATABASE_CONNECTION to true. For more performance use persistence connection to database (which reduces the connection overhead)
+- Initialize the installation. See below
 
-# CREDENTIALS AND SETTINGS
-Open settings.php file and alter it accordingly
-Found in /api/settings.php
-
-# INITIALIZING SITE AND DB
+## Initialization
 Before using the api, you must manually create all the required database and tables by any other means
 	OR
 You must use allow our script to automagically create required database and Table for you by visiting  http://youSiteAddress.com/api/init  from your browser.
 
 
-# CRUD OPERATIONS: 	how to use
-The API payloads are userid, username, email, first_name, last_name, role, country, age, 
-Go to browser
+## CRUD OPERATIONS: 	How To Use
 
 1. Read/Get Single/Multiple Record
 ----------------------------------
@@ -64,7 +60,7 @@ Examples:
 4. Remove/Delete a Single Record using DELETE request form-data or JSON
 
 
-# HOW TO KNOW ERROR
+## HOW TO KNOW ERROR
 Api returned for errors usually have a response status=error
 Eg
 {
