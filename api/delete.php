@@ -121,6 +121,7 @@ try {
      * Execute statment
      * set response code - 200 OK
      */
+    $stmt->execute();
     http_response_code(200);
     echo json_encode(array('message'=>'Employee(s) deleted successfully', 'status'=>'success'));
 } catch (PDOException $e) {
