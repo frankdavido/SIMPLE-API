@@ -37,8 +37,8 @@ Special parameters :-
 	*sort - this can be used to sort the result, and may be any of the previous optional parameters above
 	*limit - An integer eg 1,2,3,4,... used to limit the number results received
 Examples:
-	https://youSiteAddress.com/api/search/?role=manager&limit=2&sort=created   or  http://youSiteAddress.com/api/search/?role=manager&limit=2&sort=created
-	https://youSiteAddress.com/api/search/?userid=1  or  http://youSiteAddress.com/api/search/?userid=1
+	//youSiteAddress.com/api/search/?role=manager&limit=2&sort=created
+	//youSiteAddress.com/api/search/?userid=1
 
 
 ### 2. Create/Add/Insert Single Record
@@ -47,7 +47,7 @@ Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Compulsory parameters :- username, email, first_name, last_name, role, age
 Optional parameters :- country
 Examples:
-	https://youSiteAddress.com/api/create/  or  http://youSiteAddress.com/api/create/
+	//youSiteAddress.com/api/create/
 
 
 ### 3. Update a Single Record
@@ -56,7 +56,7 @@ Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Compulsory parameters :- userid
 Optional parameters :- username, email, first_name, last_name, role, age, country, created
 Examples:
-	https://youSiteAddress.com/api/create/  or  http://youSiteAddress.com/api/create/
+	//youSiteAddress.com/api/create/
 
 
 ### 4. Remove/Delete a Single Record
@@ -64,7 +64,7 @@ Request Method :- DELETE
 Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Compulsory parameters :- At least one (or more) of the following parameters - userid, username, email, first_name, last_name, role, age, country, created
 Examples:
-	https://youSiteAddress.com/api/delete/  or  http://youSiteAddress.com/delete/create/
+	//youSiteAddress.com/delete/create/
 
 
 ```
