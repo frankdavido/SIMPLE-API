@@ -11,6 +11,7 @@ if (!defined('HOSTNAME')) {
     define('SERVER_NAME', str_replace('www.', '', $_SERVER['SERVER_NAME']));
     define('HTTP_HOST', $_SERVER['HTTP_HOST']);
     define('HOSTNAME', explode('.', SERVER_NAME, 2)[0]);
+    define('REQUEST_URI', $_SERVER['REQUEST_URI']);
 }
 /*
  * Get URI elements.
@@ -18,7 +19,7 @@ if (!defined('HOSTNAME')) {
  */
 function getUriSegments():array
 {
-    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $uri = parse_url(REQUEST_URI, PHP_URL_PATH);
     $uri = explode('/', $uri);
     return $uri;
 }
