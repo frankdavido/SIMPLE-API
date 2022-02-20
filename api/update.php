@@ -17,11 +17,10 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // Determine the request method. Must be GET
 if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'PUT') {
     /*
-     * tell the user Request method is wrong
-     * i. set response code - 400 bad request
+     * set response code - 400 bad request
      */
     http_response_code(400);
-    echo json_encode(array('message'=>'Use PUT REQUEST_METHOD', 'status'=>false));
+    echo json_encode(array('message'=>'Use PUT REQUEST_METHOD', 'status'=>'error'));
     exit;
 }
 // get data
@@ -38,11 +37,10 @@ if (!is_array($data) || count($data) < 1) {
 $userid = $data['userid'];
 if (!isset($userid) || empty($userid) || !is_numeric((int) $userid)) {
     /*
-     * tell the user Request method is wrong
-     * i. set response code - 400 bad request
+     * set response code - 400 bad request
      */
     http_response_code(400);
-    echo json_encode(array('message'=>'Userid is required', 'status'=>false));
+    echo json_encode(array('message'=>'Userid is required', 'status'=>'error'));
     exit;
 }
 
@@ -99,11 +97,10 @@ try {
 
     if ($comma === '') {
         /*
-         * tell the user Request incomplete data
-         * i. set response code - 400 bad request
+         * set response code - 400 bad request
          */
         http_response_code(400);
-        echo json_encode(array('message'=>'Incomplete data. Provide a parameter to update', 'status'=>false));
+        echo json_encode(array('message'=>'Incomplete data. Provide a parameter to update', 'status'=>'error'));
         exit;
     }
 
@@ -139,22 +136,16 @@ try {
     }
     /*
      * Execute statment
-     * Tell the user the responses
-     * i. set response code - 200 OK
+     * set response code - 200 OK
      */
     http_response_code(200);
-    if ($stmt->execute()) {
-        echo json_encode(array('message'=>'Employee updated successfully', 'status'=>true));
-    } else {
-        echo json_encode(array('message'=>'No row was updated', 'status'=>false));
-    }
+    echo json_encode(array('message'=>'Employee\'s record updated successfully', 'status'=>'success'));
 } catch (PDOException $e) {
     /*
-     * Tell the user the responses
-     * i. set response code - 500 Internal Server error
+     * set response code - 500 Internal Server error
      */
     http_response_code(500);
-    echo json_encode(array('message'=>'Error occurred with your request. Please contact our admin', 'status'=>false));
+    echo json_encode(array('message'=>'Error occurred with your request. Please contact our admin', 'status'=>'error'));
     // TODO: Write logic to send mail to admin
     error_log($e->getMessage());
 }

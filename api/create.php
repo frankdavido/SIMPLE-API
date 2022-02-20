@@ -17,11 +17,10 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // Determine the request method. Must be POST
 if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
     /*
-     * tell the user Request method is wrong
-     * i. set response code - 400 bad request
+     * set response code - 400 bad request
      */
     http_response_code(400);
-    echo json_encode(array('message'=>'Use POST REQUEST_METHOD', 'status'=>false));
+    echo json_encode(array('message'=>'Use POST REQUEST_METHOD', 'status'=>'error'));
     exit;
 }
 // get data
@@ -60,11 +59,10 @@ if (!isset($data['username']) || strlen(trim($data['username'])) < 1) {
 
 if (isset($errorMessage)) {
     /*
-     * tell the user about the error
-     * i. set response code - 400 bad request
+     * set response code - 400 bad request
      */
     http_response_code(400);
-    echo json_encode(array('message'=>$errorMessage, 'status'=>false));
+    echo json_encode(array('message'=>$errorMessage, 'status'=>'error'));
     exit;
 }
 
@@ -88,28 +86,26 @@ try {
     $stmt->bindParam(':role', $role, PDO::PARAM_STR);
     /*
      * Execute statment
-     * Tell the user the responses
-     * i. set response code - 200 OK
+     * set response code - 200 OK
      */
     http_response_code(200);
     if ($stmt->execute()) {
-        echo json_encode(array('message'=>'Employee inserted successfully', 'status'=>true));
+        echo json_encode(array('message'=>'Employee inserted successfully', 'status'=>'success'));
     } else {
-        echo json_encode(array('message'=>'No row was inserted', 'status'=>false));
+        echo json_encode(array('message'=>'No row was inserted', 'status'=>'success'));
     }
 } catch (PDOException $e) {
     /*
-     * Tell the user the responses
-     * i If its is a duplicate entry. $e->errorInfo[1] will be 1062. Set response code - 409 (Conflict). Resource already exists.
-     * ii.  Otherwise set response code - 500 Internal Server error
+     * If its is a duplicate entry. $e->errorInfo[1] will be 1062. Set response code - 409 (Conflict). Resource already exists.
+     * Otherwise set response code - 500 Internal Server error
      */
     if ($e->errorInfo[1] === 1062) {
         http_response_code(409);
-        echo json_encode(array('message'=>'Resource already exists. A user with same email or username exists.', 'status'=>true));
+        echo json_encode(array('message'=>'Resource already exists. A user with same email or username exists.', 'status'=>'success'));
         exit;
     }
     http_response_code(500);
-    echo json_encode(array('message'=>'Error occurred with your request. Please contact our admin', 'status'=>false));
+    echo json_encode(array('message'=>'Error occurred with your request. Please contact our admin', 'status'=>'error'));
     // TODO: Write logic to send mail to admin
     error_log($e->getMessage());
 }
