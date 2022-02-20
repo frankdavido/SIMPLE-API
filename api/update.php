@@ -90,6 +90,11 @@ try {
         $role = $data['role'];
         $comma = ", ";
     }
+    if (isset($data['created'])) {
+        $query .= $comma . "`created` = :created";
+        $role = $data['created'];
+        $comma = ", ";
+    }
     $query .= " where `userid` = :userid";
 
     if ($comma === '') {
@@ -128,6 +133,9 @@ try {
     }
     if (isset($role)) {
         $stmt->bindParam(':role', $role, PDO::PARAM_STR);
+    }
+    if (isset($created)) {
+        $stmt->bindParam(':created', $created, PDO::PARAM_STR);
     }
     /*
      * Execute statment

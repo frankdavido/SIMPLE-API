@@ -73,7 +73,7 @@ try {
      * Form an SQL query with:
      * 1. Ignoring already existing username,email - UNIQUE KEYS
      */
-    $stmt = $dbconn->prepare("INSERT ignore into `employees` (`username`, `first_name`, `last_name`, `email`, `age`, `role`) VALUES(:username, :first_name, :last_name, :email, :age, :role)");
+    $stmt = $dbconn->prepare("INSERT into `employees` (`username`, `first_name`, `last_name`, `email`, `age`, `role`) VALUES(:username, :first_name, :last_name, :email, :age, :role)");
     $username = $data['username'];
     $first_name = $data['first_name'];
     $last_name = $data['last_name'];
@@ -100,8 +100,14 @@ try {
 } catch (PDOException $e) {
     /*
      * Tell the user the responses
-     * i. set response code - 500 Internal Server error
+     * i If its is a duplicate entry. $e->errorInfo[1] will be 1062. Set response code - 409 (Conflict). Resource already exists.
+     * ii.  Otherwise set response code - 500 Internal Server error
      */
+    if ($e->errorInfo[1] === 1062) {
+        http_response_code(409);
+        echo json_encode(array('message'=>'Resource already exists. A user with same email or username exists.', 'status'=>true));
+        exit;
+    }
     http_response_code(500);
     echo json_encode(array('message'=>'Error occurred with your request. Please contact our admin', 'status'=>false));
     // TODO: Write logic to send mail to admin
