@@ -23,7 +23,7 @@ Before using the api, you must manually create all the required database and tab
 
 OR
 
-You must use allow our script to automagically create required database and Table for you by visiting  http://youSiteAddress.com/api/init  from your browser.
+You must use allow our script to automagically create required database and Table for you by visiting  //youSiteAddress.com/api/init  from your browser.
 
 
 ## CRUD OPERATIONS: How To Use
