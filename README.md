@@ -19,17 +19,17 @@ Note: I can make PHP to automatically update this htaccess' line number 16 to au
 
 ## Initialization
 
-Before using the api, you must manually create all the required database and tables by any other means - CLI, Bash, PhpMyadmin, etc.
+	Before using the api, you must manually create all the required database and tables by any other means - CLI, Bash, PhpMyadmin, etc.
 
-	OR
+OR
 
-You must use allow our script to automagically create required database and Table for you by visiting  http://youSiteAddress.com/api/init  from your browser.
+	You must use allow our script to automagically create required database and Table for you by visiting  http://youSiteAddress.com/api/init  from your browser.
 
 
 ## CRUD OPERATIONS: How To Use
 
 ```
- 1. Read/Get Single/Multiple Record
+### 1. Read/Get Single/Multiple Record
 Request Method: GET
 Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Optional parameters :- userid, username, email, first_name, last_name, role, country, age.
@@ -41,7 +41,7 @@ Examples:
 	https://youSiteAddress.com/api/search/?userid=1
 
 
- 2. Create/Add/Insert Single Record
+### 2. Create/Add/Insert Single Record
 Request Method :- POST
 Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Compulsory parameters :- username, email, first_name, last_name, role, age
@@ -50,7 +50,7 @@ Examples:
 	https://youSiteAddress.com/api/create/
 
 
- 3. Update a Single Record
+### 3. Update a Single Record
 Request Method :- PUT
 Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Compulsory parameters :- userid
@@ -59,7 +59,7 @@ Examples:
 	https://youSiteAddress.com/api/create/
 
 
- 4. Remove/Delete a Single Record using DELETE request form-data or JSON
+### 4. Remove/Delete a Single Record
 
 
 ```
