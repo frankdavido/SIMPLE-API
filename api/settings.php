@@ -38,9 +38,9 @@ class CONSTANTS
      * Database connection Parameters
     */
     public const DATABASE_HOST  = 'localhost';              // May be localhost or IP of the database server.
-    public const DATABASE_NAME  = 'user_testapi';                // Change to real database name
-    public const DATABASE_USER  = 'user_elipheleh';                   // Change to real database user
-    public const DATABASE_PASSWORD  = 'bEsyG1Z7N17ekw8K';// Change to real database password
+    public const DATABASE_NAME  = 'dbname';                 // Change to real database name
+    public const DATABASE_USER  = 'pass';                   // Change to real database user
+    public const DATABASE_PASSWORD  = 'pass';               // Change to real database password
     /**
      * Whether to use persistent connection to database. Makes the application faster.
     */
