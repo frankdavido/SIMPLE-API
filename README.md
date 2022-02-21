@@ -9,6 +9,8 @@ The /.htaccess file has securities in place to
 * Redirect all requests coming into not-existing directories and non-existing files to root invalid.php
 * Black list offending IPs. 
 Note: I can make PHP to automatically update this htaccess' line number 16 to automatically blacklist any offeding User's IP if he fails certain criteria.
+`db/dbconn.php file`
+* Use of PDO prepared statement to avoid SQL injection (SQL attack is a technique to hack sites database from any input form of apis. To read more on SQL attacks, for a start, see: )
 
 ## ⭐ Installation
 
