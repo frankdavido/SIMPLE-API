@@ -119,9 +119,19 @@ try {
     }
     /*
      * Execute statment
-     * set response code - 200 OK
      */
     $stmt->execute();
+    if ($stmt->rowCount() < 1) {
+        /*
+         * set response code - 404 Not Found
+         */
+        http_response_code(404);
+        echo json_encode(array('message'=>'Employee does not exist or already deleted', 'status'=>'error'));
+        exit;
+    }
+    /*
+     * set response code - 200 OK
+     */
     http_response_code(200);
     echo json_encode(array('message'=>'Employee(s) deleted successfully', 'status'=>'success'));
 } catch (PDOException $e) {
