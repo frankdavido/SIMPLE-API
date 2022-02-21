@@ -13,6 +13,10 @@ Note: I can make PHP to automatically update this htaccess' line number 16 to au
 `db/dbconn.php file`
 * Use of PDO prepared statement to avoid SQL injection (SQL attack is a technique to hack sites database from any input form of apis. To read more on SQL attacks, for a start, see: https://www.guru99.com/learn-sql-injection-with-practical-example.html   and    https://portswigger.net/web-security/sql-injection)
 
+`Futher securities can be provided using Access tokens and secret keys.` But for the scope of this Simple API, we will not cover it here. 
+
+To give a hint: You, the Developer, should just create a table or use your old table where every user has a hashed token and secret keys. Whenever a user of the api has to interract with the api, they just need to provide a matching acces token and secret stored on the database. Without thes matching authentications, issue them a http_response_code(401) Unauthorized. With a message telling them they are not authenticated.
+
 ## ⭐ Installation
 
 - Move all the files except the License and Readme files into your website document root directory
