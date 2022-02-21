@@ -31,16 +31,13 @@ try {
 if ($isInitCommand && null !== TOPMOST_FILE && TOPMOST_FILE === 'init.php') {
     /*
      * Create database if not exist
+     * Check if database existed already
+     * That is if it had been initialized before or not
      */
     try {
         $create__db = "CREATE DATABASE IF NOT EXISTS `" . constants::DATABASE_NAME . "` CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-        $stmt = $dbconn->exec($create__db);
-        /*
-         * Check if database existed already
-         * That is if it had been initialized before or not
-         */
-        if (1 === (int) $stmt) {
-            // NO! database did not exist already
+        if (1 === (int) $dbconn->exec($create__db)) {
+            // New, create database
             echo "Created database: `" . constants::DATABASE_NAME . "` successfully<br>";
         } else {
             echo "Database already initialized.<br>";
@@ -75,7 +72,7 @@ if ($isInitCommand && null !== TOPMOST_FILE && TOPMOST_FILE === 'init.php') {
             KEY `country` (`country`)
         ) CHARACTER SET utf8 ENGINE=InnoDB";
         /*
-         * Now Create the Table
+         * Create the employees table
          */
         try {
             $dbconn->exec($create_users_table);
@@ -86,7 +83,7 @@ if ($isInitCommand && null !== TOPMOST_FILE && TOPMOST_FILE === 'init.php') {
         }
 
         /*
-         * Insert Test Datas into database
+         * Insert Test Datas into employees table
          */
         if (true === constants::CREATE_TEST_DATA) {
             try {
