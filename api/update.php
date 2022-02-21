@@ -32,7 +32,7 @@ if (!is_array($data) || count($data) < 1) {
     $data = $_GET;                                              // accept Multipart form data
 }
 /*
- * Ensure the request must have a userid
+ * Ensure the request must have an userid
  */
 $userid = $data['userid'];
 if (!isset($userid) || empty($userid) || !is_numeric((int) $userid)) {
@@ -45,6 +45,21 @@ if (!isset($userid) || empty($userid) || !is_numeric((int) $userid)) {
 }
 
 try {
+    /*
+     * First check if userid exist in database
+     */
+    $stmt = $dbconn->prepare('SELECT 1 from `employees` where userid = :userid');
+    $stmt->bindParam(':userid', $userid, PDO::PARAM_INT);
+    $stmt->execute();
+    if (!$stmt->fetch(PDO::FETCH_COLUMN)) {
+        /*
+         * set response code - 404 Not Found
+         */
+        http_response_code(404);
+        echo json_encode(array('message'=>'No record found to update', 'status'=>'error'));
+        exit;
+    }
+    $stmt = null;
     /*
      * Form an SQL query with:
      * 1. Where clause (optional)
@@ -136,9 +151,16 @@ try {
     }
     /*
      * Execute statment
+     */
+    $stmt->execute();
+    /*
      * set response code - 200 OK
      */
     http_response_code(200);
+    if ($stmt->rowCount() < 1) {
+        echo json_encode(array('message'=>'Employee\'s new record is same as the old', 'status'=>'success'));
+        exit;
+    }
     echo json_encode(array('message'=>'Employee\'s record updated successfully', 'status'=>'success'));
 } catch (PDOException $e) {
     /*
