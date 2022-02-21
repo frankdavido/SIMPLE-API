@@ -66,7 +66,7 @@ Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Compulsory parameters :- userid
 Optional parameters :- username, email, first_name, last_name, role, age, country, created
 Examples:
-	//youSiteAddress.com/api/create/
+	//youSiteAddress.com/api/update/
 
 
 ### 4. Remove/Delete a Single Record
@@ -74,7 +74,7 @@ Request Method :- DELETE
 Accepted Payloads :- URLencoded form data, Multipart form data, JSON
 Compulsory parameters :- At least one (or more) of the following parameters - userid, username, email, first_name, last_name, role, age, country, created
 Examples:
-	//youSiteAddress.com/delete/create/
+	//youSiteAddress.com/delete/delete/
 
 
 ```
