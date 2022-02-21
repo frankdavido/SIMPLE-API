@@ -1,6 +1,9 @@
 # SIMPLE-API
 
-A simple API with Core PHP to perform CRUD operations
+A simple API with Core PHP to perform CRUD operations in Core-PHP
+
+[No Frameworks nor Libraries used]
+
 ## Some Securities Put In Place
 
 `HTACCESS file`
