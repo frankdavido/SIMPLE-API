@@ -10,7 +10,7 @@ The /.htaccess file has securities in place to
 * Black list offending IPs. 
 Note: I can make PHP to automatically update this htaccess' line number 16 to automatically blacklist any offeding User's IP if he fails certain criteria.
 `db/dbconn.php file`
-* Use of PDO prepared statement to avoid SQL injection (SQL attack is a technique to hack sites database from any input form of apis. To read more on SQL attacks, for a start, see: )
+* Use of PDO prepared statement to avoid SQL injection (SQL attack is a technique to hack sites database from any input form of apis. To read more on SQL attacks, for a start, see: https://www.guru99.com/learn-sql-injection-with-practical-example.html   and    https://portswigger.net/web-security/sql-injection)
 
 ## ⭐ Installation
 

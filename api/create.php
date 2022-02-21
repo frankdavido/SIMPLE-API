@@ -33,7 +33,8 @@ if (!is_array($data) || count($data) < 1) {
 }
 
 /*
- * Verify $data
+ * Validations: Verify $data, lengths, email regex formats & mx etc.
+ * Validation criterias can be extended as per needed
  * username, first_name, last_name, email, age, role are compulsory field
  */
 if (!isset($data['username']) || strlen(trim($data['username'])) < 1) {
@@ -68,8 +69,7 @@ if (isset($errorMessage)) {
 
 try {
     /*
-     * Form an SQL query with:
-     * 1. Ignoring already existing username,email - UNIQUE KEYS
+     * Form an SQL query
      */
     $stmt = $dbconn->prepare("INSERT into `employees` (`username`, `first_name`, `last_name`, `email`, `age`, `role`) VALUES(:username, :first_name, :last_name, :email, :age, :role)");
     $username = $data['username'];
@@ -96,12 +96,14 @@ try {
     }
 } catch (PDOException $e) {
     /*
-     * If its is a duplicate entry. $e->errorInfo[1] will be 1062. Set response code - 409 (Conflict). Resource already exists.
+     * Check if username or email already exists. (Reason for SQL failure)
+     * Set response code - 409 (Conflict). Resource already exists.
      * Otherwise set response code - 500 Internal Server error
      */
     if ($e->errorInfo[1] === 1062) {
+        // If its is a duplicate entry. $e->errorInfo[1] will be 1062
         http_response_code(409);
-        echo json_encode(array('message'=>'Resource already exists. A user with same email or username exists.', 'status'=>'success'));
+        echo json_encode(array('message'=>'Resource already exists. A user with same email or username exists.', 'status'=>'error'));
         exit;
     }
     http_response_code(500);
